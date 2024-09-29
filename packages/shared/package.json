@@ -1,5 +1,5 @@
 {
-  "name": "@repo/kafka",
+  "name": "@repo/shared",
   "version": "0.0.0",
   "private": true,
   "main": "./dist/index.js",
@@ -16,11 +16,12 @@
   "dependencies": {
     "cors": "^2.8.5",
     "express": "^4.21.0",
+    "kafkajs": "^2.2.4",
     "mongoose": "^8.7.0"
   },
   "devDependencies": {
-    "@repo/typescript-config": "workspace:*",
     "@repo/eslint-config": "workspace:*",
+    "@repo/typescript-config": "workspace:*",
     "@types/cors": "^2.8.17",
     "@types/express": "^5.0.0",
     "@types/node": "^22.7.4",
