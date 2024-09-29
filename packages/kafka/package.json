@@ -1,0 +1,30 @@
+{
+  "name": "@repo/kafka",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist/**"
+  ],
+  "scripts": {
+    "start": "node dist/index.js",
+    "dev": "ts-node-dev --respawn --poll src/index.ts",
+    "build": "tsc",
+    "lint": "eslint src/"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.21.0",
+    "mongoose": "^8.7.0"
+  },
+  "devDependencies": {
+    "@repo/typescript-config": "workspace:*",
+    "@repo/eslint-config": "workspace:*",
+    "@types/cors": "^2.8.17",
+    "@types/express": "^5.0.0",
+    "@types/node": "^22.7.4",
+    "dotenv": "^16.4.5",
+    "ts-node-dev": "^2.0.0"
+  }
+}

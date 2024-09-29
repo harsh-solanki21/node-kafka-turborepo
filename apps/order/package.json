@@ -1,0 +1,17 @@
+{
+  "name": "@repo/order",
+  "version": "1.0.0",
+  "description": "Order Service",
+  "main": "dist/index.js",
+  "scripts": {
+    "start": "node dist/index.js",
+    "dev": "ts-node-dev --respawn --poll src/index.ts",
+    "build": "tsc",
+    "lint": "eslint src/"
+  },
+  "dependencies": {},
+  "devdependencies": {
+    "@repo/typescript-config": "workspace:*",
+    "@repo/eslint-config": "workspace:*"
+  }
+}
