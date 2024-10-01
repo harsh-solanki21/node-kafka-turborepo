@@ -6,10 +6,12 @@ import {
   consumeMessages,
 } from "./kafka";
 
-export default {
+const configs = {
   connectDB,
   createProducer,
   createConsumer,
   sendMessage,
   consumeMessages,
 };
+
+export default configs;

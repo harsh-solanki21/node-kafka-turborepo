@@ -6,14 +6,14 @@ const brokers = process.env.KAFKA_BROKER
   : ["localhost:9092"];
 
 const kafkaConfig: KafkaConfig = {
-  clientId: "node-kafka",
+  clientId: process.env.KAFKA_CLIENT_ID || "node-kafka-cluster",
   brokers,
 };
 
-const kafka = new Kafka(kafkaConfig);
+const cluster = new Kafka(kafkaConfig);
 
 export const createProducer = async (): Promise<Producer> => {
-  const producer = kafka.producer();
+  const producer = cluster.producer();
   await producer.connect();
   console.log("Kafka Producer connected");
   return producer;
@@ -39,7 +39,7 @@ export const sendMessage = async (
 };
 
 export const createConsumer = async (groupId: string): Promise<Consumer> => {
-  const consumer = kafka.consumer({ groupId });
+  const consumer = cluster.consumer({ groupId });
   await consumer.connect();
   console.log("Kafka Consumer connected");
   return consumer;
@@ -47,11 +47,11 @@ export const createConsumer = async (groupId: string): Promise<Consumer> => {
 
 export const consumeMessages = async (
   consumer: Consumer,
-  topic: string,
+  topics: string[],
   onMessage: (message: any) => void
 ) => {
-  await consumer.subscribe({ topic, fromBeginning: true });
-  console.log(`Subscribed to topic ${topic}`);
+  await consumer.subscribe({ topics, fromBeginning: true });
+  console.log(`Subscribed to topics: ${topics.join(", ")}`);
 
   await consumer.run({
     eachMessage: async ({ topic, partition, message }) => {

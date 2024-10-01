@@ -1,10 +1,12 @@
 import { BadRequest, NotFound, ValidationError } from "./customErrorHandler";
 import { sendSuccessResponse, sendErrorResponse } from "./customResponse";
 
-export default {
+const utils = {
   BadRequest,
   NotFound,
   ValidationError,
   sendSuccessResponse,
   sendErrorResponse,
 };
+
+export default utils;
