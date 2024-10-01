@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction, configs, utils } from "@repo/shared";
-import Product from "../models/Product";
+import Product, { IProduct } from "../models/Product";
 
 export class ProductController {
   private producer: any;
@@ -14,7 +14,15 @@ export class ProductController {
 
   async createProduct(req: Request, res: Response, next: NextFunction) {
     try {
-      const product = await Product.create(req.body);
+      const product: IProduct = await Product.create(req.body);
+
+      // Send a message to Kafka
+      const message = {
+        key: product._id as string,
+        data: JSON.stringify(product),
+      };
+      configs.sendMessage(this.producer, "product-created", message);
+
       utils.sendSuccessResponse(
         res,
         "Product created successfully",
@@ -55,19 +63,21 @@ export class ProductController {
   async updateProduct(req: Request, res: Response, next: NextFunction) {
     try {
       const { id } = req.params;
-      const product = await Product.findByIdAndUpdate(id, req.body, {
-        new: true,
-      });
+      const product: IProduct | null = await Product.findByIdAndUpdate(
+        id,
+        req.body,
+        { new: true }
+      );
       if (!product) {
         throw new utils.NotFound("Product not found");
       }
 
       // Send a message to Kafka
       const message = {
-        key: "update",
-        value: JSON.stringify(product),
+        key: id,
+        data: JSON.stringify(product),
       };
-      configs.sendMessage(this.producer, "product-events", [message]);
+      configs.sendMessage(this.producer, "product-updated", message);
 
       utils.sendSuccessResponse(res, "Product updated successfully", product);
     } catch (error: any) {
@@ -85,10 +95,10 @@ export class ProductController {
 
       // Send a message to Kafka
       const message = {
-        key: "delete",
-        value: JSON.stringify({ id }),
+        key: id,
+        data: id,
       };
-      configs.sendMessage(this.producer, "product-events", [message]);
+      configs.sendMessage(this.producer, "product-deleted", message);
 
       utils.sendSuccessResponse(res, "Product deleted successfully", null);
     } catch (error: any) {

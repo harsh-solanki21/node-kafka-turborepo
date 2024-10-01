@@ -1,7 +1,6 @@
 import { mongoose } from "@repo/shared";
 
-export interface IProduct {
-  id: string;
+export interface IProduct extends mongoose.Document {
   name: string;
   description: string;
   price: number;
