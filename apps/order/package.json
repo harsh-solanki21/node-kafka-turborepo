@@ -9,7 +9,9 @@
     "build": "tsc",
     "lint": "eslint src/"
   },
-  "dependencies": {},
+  "dependencies": {
+    "@repo/shared": "workspace:*"
+  },
   "devdependencies": {
     "@repo/typescript-config": "workspace:*",
     "@repo/eslint-config": "workspace:*"
