@@ -1,7 +1,7 @@
 import { Kafka, KafkaConfig, Producer, Consumer } from "kafkajs";
 import { BadRequest } from "../utils/customErrorHandler";
 
-const brokers = process.env.KAFKA_BROKER
+const brokers: string[] = process.env.KAFKA_BROKER
   ? [process.env.KAFKA_BROKER]
   : ["localhost:9092"];
 
@@ -22,17 +22,15 @@ export const createProducer = async (): Promise<Producer> => {
 export const sendMessage = async (
   producer: Producer,
   topic: string,
-  messages: { key: string; value: string }[]
+  message: { key: string; data: string }
 ) => {
   try {
     await producer.send({
       topic,
-      messages: messages.map((msg) => ({
-        key: msg.key,
-        value: msg.value,
-      })),
+      messages: [{ key: message.key, value: message.data }],
     });
     console.log(`Message sent to topic ${topic}`);
+    await producer.disconnect();
   } catch (err: any) {
     throw new BadRequest(err.message);
   }
@@ -63,7 +61,7 @@ export const consumeMessages = async (
         key,
         value,
       });
-      onMessage({ key, value });
+      onMessage({ topic, key, value });
     },
   });
 };
