@@ -20,13 +20,19 @@ app.use(cors(corsOptions));
 app.use(express.json());
 
 // kafka
+let producer: any;
 (async () => {
   try {
+    producer = await configs.createProducer();
     const consumer = await configs.createConsumer("product-group");
 
-    await configs.consumeMessages(consumer, ["order-events"], (message) => {
-      console.log("Received message:", message);
-    });
+    await configs.consumeMessages(
+      consumer,
+      ["order-created", "order-updated", "order-deleted"],
+      (message) => {
+        console.log("Received message:", message);
+      }
+    );
   } catch (error) {
     console.error("Kafka connection failed", error);
   }
@@ -48,3 +54,5 @@ configs
   .catch((err: Error) => {
     console.log("MongoDB Connection error: ", err);
   });
+
+export { producer };

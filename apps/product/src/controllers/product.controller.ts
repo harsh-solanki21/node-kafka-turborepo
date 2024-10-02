@@ -1,17 +1,8 @@
 import { Request, Response, NextFunction, configs, utils } from "@repo/shared";
 import Product, { IProduct } from "../models/Product";
+import { producer } from "../index";
 
 export class ProductController {
-  private producer: any;
-
-  constructor() {
-    this.initialize();
-  }
-
-  private async initialize() {
-    this.producer = await configs.createProducer();
-  }
-
   async createProduct(req: Request, res: Response, next: NextFunction) {
     try {
       const product: IProduct = await Product.create(req.body);
@@ -21,7 +12,7 @@ export class ProductController {
         key: product._id as string,
         data: JSON.stringify(product),
       };
-      configs.sendMessage(this.producer, "product-created", message);
+      await configs.sendMessage(producer, "product-created", message);
 
       utils.sendSuccessResponse(
         res,
@@ -77,7 +68,7 @@ export class ProductController {
         key: id,
         data: JSON.stringify(product),
       };
-      configs.sendMessage(this.producer, "product-updated", message);
+      await configs.sendMessage(producer, "product-updated", message);
 
       utils.sendSuccessResponse(res, "Product updated successfully", product);
     } catch (error: any) {
@@ -98,7 +89,7 @@ export class ProductController {
         key: id,
         data: id,
       };
-      configs.sendMessage(this.producer, "product-deleted", message);
+      await configs.sendMessage(producer, "product-deleted", message);
 
       utils.sendSuccessResponse(res, "Product deleted successfully", null);
     } catch (error: any) {
