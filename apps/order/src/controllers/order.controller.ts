@@ -1,17 +1,8 @@
 import { Request, Response, NextFunction, configs, utils } from "@repo/shared";
 import Order, { IOrder } from "../models/Order";
+import { producer } from "../index";
 
 export class OrderController {
-  private producer: any;
-
-  constructor() {
-    this.initialize();
-  }
-
-  private async initialize() {
-    this.producer = await configs.createProducer();
-  }
-
   async createOrder(req: Request, res: Response, next: NextFunction) {
     try {
       const { products } = req.body;
@@ -29,7 +20,7 @@ export class OrderController {
         key: order._id as string,
         data: JSON.stringify(order),
       };
-      configs.sendMessage(this.producer, "order-created", message);
+      await configs.sendMessage(producer, "order-created", message);
 
       utils.sendSuccessResponse(res, "Order created successfully", order, 201);
     } catch (error: any) {
@@ -85,7 +76,7 @@ export class OrderController {
         key: id,
         data: JSON.stringify(order),
       };
-      configs.sendMessage(this.producer, "order-updated", message);
+      await configs.sendMessage(producer, "order-updated", message);
 
       utils.sendSuccessResponse(res, "Order updated successfully", order);
     } catch (error: any) {
@@ -106,7 +97,7 @@ export class OrderController {
         key: id,
         data: JSON.stringify({ id }),
       };
-      configs.sendMessage(this.producer, "order-deleted", message);
+      await configs.sendMessage(producer, "order-deleted", message);
 
       utils.sendSuccessResponse(res, "Order deleted successfully", null);
     } catch (error: any) {

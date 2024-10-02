@@ -17,7 +17,7 @@ const OrderSchema: mongoose.Schema = new mongoose.Schema(
     products: [
       {
         productId: {
-          type: String,
+          type: mongoose.Schema.Types.ObjectId,
           required: true,
         },
         price: {
