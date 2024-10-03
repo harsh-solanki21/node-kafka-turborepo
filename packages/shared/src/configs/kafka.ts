@@ -30,7 +30,6 @@ export const sendMessage = async (
       messages: [{ key: message.key, value: message.data }],
     });
     console.log(`Message sent to topic ${topic}`);
-    await producer.disconnect();
   } catch (err: any) {
     throw new BadRequest(err.message);
   }
