@@ -87,7 +87,7 @@ export class ProductController {
       // Send a message to Kafka
       const message = {
         key: id,
-        data: id,
+        data: JSON.stringify({ product_id: id }),
       };
       await configs.sendMessage(producer, "product-deleted", message);
 
