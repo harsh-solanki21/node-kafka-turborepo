@@ -11,7 +11,7 @@ import OrderService from "./configs/kafka";
 
 dotenv.config();
 const app: Express = express();
-const port = process.env.PORT || 5001;
+const port = process.env.PORT || 5002;
 
 const corsOptions: cors.CorsOptions = {
   origin: "*",
@@ -48,7 +48,7 @@ app.use(middlewares.notFoundHandler);
 app.use(middlewares.errorHandler);
 
 configs
-  .connectDB()
+  .connectDB(process.env.MONGO_URI as string)
   .then(() => {
     app.listen(port, () => {
       console.log(`Server is running on port ${port}`);
