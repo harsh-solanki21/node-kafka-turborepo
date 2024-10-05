@@ -1,8 +1,8 @@
 import { Kafka, KafkaConfig, Producer, Consumer } from "kafkajs";
 import { BadRequest } from "../utils/customErrorHandler";
 
-const brokers: string[] = process.env.KAFKA_BROKER
-  ? [process.env.KAFKA_BROKER]
+const brokers: string[] = process.env.KAFKA_BROKERS
+  ? process.env.KAFKA_BROKERS.split(",")
   : ["localhost:9092"];
 
 const kafkaConfig: KafkaConfig = {
