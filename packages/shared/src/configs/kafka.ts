@@ -3,7 +3,7 @@ import { BadRequest } from "../utils/customErrorHandler";
 
 const brokers: string[] = process.env.KAFKA_BROKERS
   ? process.env.KAFKA_BROKERS.split(",")
-  : ["localhost:9092"];
+  : ["kafka:9092"];
 
 const kafkaConfig: KafkaConfig = {
   clientId: process.env.KAFKA_CLIENT_ID || "node-kafka-cluster",
