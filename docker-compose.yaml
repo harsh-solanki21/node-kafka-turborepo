@@ -8,14 +8,14 @@ services:
     container_name: product-service
     ports:
       - "5001:5001"
-    networks:
-      - kafka-turbo
     environment:
       - PORT=5001
-      - MONGODB_URI=mongodb://mongodb:27017/productdb
-      - KAFKA_BROKERS=localhost:9092
+      - MONGO_URI=mongodb://mongo:27017/productdb?authSource=admin
+      - KAFKA_BROKERS=kafka:9092
+    networks:
+      - kafka-turbo
     depends_on:
-      - mongodb
+      - mongo
       - kafka
 
   order:
@@ -25,25 +25,25 @@ services:
     container_name: order-service
     ports:
       - "5002:5002"
-    networks:
-      - kafka-turbo
     environment:
       - PORT=5002
-      - MONGODB_URI=mongodb://mongodb:27017/orderdb
-      - KAFKA_BROKERS=localhost:9092
+      - MONGO_URI=mongodb://mongo:27017/orderdb?authSource=admin
+      - KAFKA_BROKERS=kafka:9092
+    networks:
+      - kafka-turbo
     depends_on:
-      - mongodb
+      - mongo
       - kafka
 
-  mongodb:
+  mongo:
     image: mongo:latest
     container_name: mongodb
     ports:
       - "27017:27017"
-    volumes:
-      - mongodb_data:/data/db
     networks:
       - kafka-turbo
+    volumes:
+      - mongodb_data:/data/db
 
   kafka:
     image: bitnami/kafka:latest
@@ -61,10 +61,12 @@ services:
       - KAFKA_CFG_AUTO_CREATE_TOPICS_ENABLE=true
     networks:
       - kafka-turbo
+    volumes:
+      - kafka_data:/bitnami/kafka
 
 volumes:
   mongodb_data:
+  kafka_data:
 
 networks:
   kafka-turbo:
-    driver: bridge
