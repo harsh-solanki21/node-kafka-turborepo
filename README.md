@@ -22,17 +22,30 @@
 
 ## Getting Started
 
-### Prerequisites
+## Running with Docker Compose
+
+Ensure you have Docker and Docker Compose installed on your system.
+
+**1. Clone the repository:** `git clone https://github.com/harsh-solanki21/node-kafka-turborepo.git`
+
+**2. Navigate to the project directory:** `cd node-kafka-turborepo`
+**3. Build the images:** `docker-compose build`
+**4. Start the services:** `docker-compose up -d`
+**5. To stop the project:** `docker-compose down`
+
+<br />
+
+### Running Locally
+
+#### Prerequisites
 
 - Node.js (v20 or later)
 - pnpm package manager
-- Docker (for Kafka)
+- Docker (Kafka Container)
 
-### Installation
-
-**1. Clone the repo**
-**2. Install dependencies: `pnpm install`**
-**3. Build the project: `turbo build`**
+**1. Clone the repo:** `https://github.com/harsh-solanki21/node-kafka-turborepo.git`
+**2. Install dependencies:** `pnpm install`
+**3. Build the project:** `turbo build`
 
 ```bash
 # Using pnpm
