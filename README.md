@@ -26,11 +26,10 @@
 
 Ensure you have Docker and Docker Compose installed on your system.
 
-**1. Clone the repository:** `git clone https://github.com/harsh-solanki21/node-kafka-turborepo.git`
-
-**2. Navigate to the project directory:** `cd node-kafka-turborepo`
-**3. Build the images:** `docker-compose build`
-**4. Start the services:** `docker-compose up -d`
+**1. Clone the repository:** `git clone https://github.com/harsh-solanki21/node-kafka-turborepo.git` <br />
+**2. Navigate to the project directory:** `cd node-kafka-turborepo` <br />
+**3. Build the images:** `docker-compose build` <br />
+**4. Start the services:** `docker-compose up -d` <br />
 **5. To stop the project:** `docker-compose down`
 
 <br />
@@ -43,9 +42,9 @@ Ensure you have Docker and Docker Compose installed on your system.
 - pnpm package manager
 - Docker (Kafka Container)
 
-**1. Clone the repo:** `https://github.com/harsh-solanki21/node-kafka-turborepo.git`
-**2. Install dependencies:** `pnpm install`
-**3. Build the project:** `turbo build`
+**1. Clone the repo:** `https://github.com/harsh-solanki21/node-kafka-turborepo.git` <br />
+**2. Install dependencies:** `pnpm install` <br />
+**3. Build the project:** `turbo build` <br />
 
 ```bash
 # Using pnpm
